@@ -82,7 +82,7 @@ class pedidosForm extends Component {
                     <td>
                       <InputValidator
                         type="text"
-                        placeholder="Cliente"
+                        placeholder="descricao"
                         name={`produtos[${index}].descricao`}
                         value={prod.descricao}
                         handleChange={handleChange}
@@ -91,7 +91,7 @@ class pedidosForm extends Component {
                     <td>
                       <InputValidator
                         type="text"
-                        placeholder="Cliente"
+                        placeholder="quantidade"
                         name={`produtos[${index}].qtd`}
                         value={prod.qtd}
                         handleChange={handleChange}
