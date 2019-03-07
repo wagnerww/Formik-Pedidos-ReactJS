@@ -9,11 +9,11 @@ import { push_uniq } from "terser";
 
 class pedidosForm extends Component {
   render() {
-    const { handleSubmit, errors, handleChange, values } = this.props;
+    const { handleSubmit, errors, handleChange, values, touched } = this.props;
 
     return (
       <form onSubmit={handleSubmit}>
-        {!!errors.id && <span>{errors.id}</span>}
+        {!!errors.id && touched.id && <span>{errors.id}</span>}
         <label htmlFor="">id</label>
         <InputValidator
           type="text"
@@ -23,7 +23,7 @@ class pedidosForm extends Component {
           value={values.id}
           isValid={!!errors.id}
         />
-        {!!errors.cliente && <span>{errors.cliente}</span>}
+        {!!errors.cliente && touched.cliente && <span>{errors.cliente}</span>}
         <label htmlFor="">Cliente</label>
         <InputValidator
           type="text"
@@ -31,9 +31,11 @@ class pedidosForm extends Component {
           name="cliente"
           handleChange={handleChange}
           value={values.cliente}
-          isValid={!!errors.cliente}
+          isValid={!!errors.cliente && touched.cliente}
         />
-        {!!errors.endereco && <span>{errors.endereco}</span>}
+        {!!errors.endereco && touched.endereco && (
+          <span>{errors.endereco}</span>
+        )}
         <label htmlFor="">Endereco</label>
         <InputValidator
           type="text"
@@ -41,74 +43,85 @@ class pedidosForm extends Component {
           name="endereco"
           handleChange={handleChange}
           value={values.endereco}
-          isValid={!!errors.endereco}
+          isValid={!!errors.endereco && touched.endereco}
         />
-        <this.Produtos produtos={values.produtos} handleChange={handleChange} />
+        <FieldArray
+          name="produtos"
+          render={({ push }) => (
+            <Fragment>
+              <table>
+                <thead>
+                  <tr>
+                    <td>id</td>
+                    <td>descricao</td>
+                    <td>Quantidade</td>
+                    <td>Valor</td>
+                    <td>Total</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {values.produtos.map((prod, index) => (
+                    <tr key={index}>
+                      <td>
+                        <InputValidator
+                          type="number"
+                          placeholder="id"
+                          name={`produtos[${index}].id`}
+                          value={prod.id}
+                          handleChange={handleChange}
+                        />
+                      </td>
+                      <td>
+                        <InputValidator
+                          type="text"
+                          placeholder="descricao"
+                          name={`produtos[${index}].descricao`}
+                          value={prod.descricao}
+                          handleChange={handleChange}
+                        />
+                      </td>
+                      <td>
+                        <InputValidator
+                          type="text"
+                          placeholder="quantidade"
+                          name={`produtos[${index}].qtd`}
+                          value={prod.qtd}
+                          handleChange={handleChange}
+                        />
+                      </td>
+                      <td>
+                        <InputValidator
+                          type="number"
+                          placeholder="valor"
+                          name={`produtos[${index}].valor`}
+                          value={prod.valor}
+                          handleChange={handleChange}
+                        />
+                      </td>
+                      <td>
+                        <InputValidator
+                          type="text"
+                          placeholder="total"
+                          name={`produtos[${index}].total`}
+                          value={prod.total}
+                          handleChange={handleChange}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <button type="button" onClick={async () => await push({})}>
+                Add
+              </button>
+            </Fragment>
+          )}
+        />
 
         <button type="submit">Enviar</button>
       </form>
     );
   }
-
-  Produtos = ({ produtos, handleChange }) => {
-    // console.log("obj", obj);
-    //const { produtos } = obj.obj;
-    console.log("prod", produtos);
-    return (
-      <FieldArray
-        name="produtos"
-        render={({ push }) => (
-          <Fragment>
-            <table>
-              <thead>
-                <tr>
-                  <td>id</td>
-                  <td>descricao</td>
-                  <td>Quantidade</td>
-                </tr>
-              </thead>
-              <tbody>
-                {produtos.map((prod, index) => (
-                  <tr key={index}>
-                    <td>
-                      <InputValidator
-                        type="number"
-                        placeholder="id"
-                        name={`produtos[${index}].id`}
-                        value={prod.id}
-                        handleChange={handleChange}
-                      />
-                    </td>
-                    <td>
-                      <InputValidator
-                        type="text"
-                        placeholder="descricao"
-                        name={`produtos[${index}].descricao`}
-                        value={prod.descricao}
-                        handleChange={handleChange}
-                      />
-                    </td>
-                    <td>
-                      <InputValidator
-                        type="text"
-                        placeholder="quantidade"
-                        name={`produtos[${index}].qtd`}
-                        value={prod.qtd}
-                        handleChange={handleChange}
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <button type="button" onClick={async () => await push({})}>
-              Add
-            </button>
-          </Fragment>
-        )}
-      />
-    );
-  };
 }
 export default withFormik({
   mapPropsToValues: () => ({
@@ -119,7 +132,9 @@ export default withFormik({
       {
         id: 0,
         descricao: "",
-        qtd: 0
+        qtd: 0,
+        valor: 0,
+        total: 0
       }
     ]
   }),
