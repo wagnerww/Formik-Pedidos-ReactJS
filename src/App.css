@@ -1,3 +1,9 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
 }
@@ -21,6 +27,25 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.table {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.table input {
+  width: 100%;
+}
+
+.tableCell {
+  flex-grow: 1;
+  padding: 2px;
+}
+
+.tableCol5 .tableCell {
+  width: 20%;
 }
 
 @keyframes App-logo-spin {
