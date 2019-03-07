@@ -6,11 +6,15 @@ import InputValidator from "../../commun/elements/inputValidator";
 
 // import styles from './styles';
 
-class pedidosForm extends Component {
-  constructor() {
-    const produtos = {};
-  }
+const produtos = {
+  id: 0,
+  descricao: "",
+  qtd: 0,
+  valor: 0,
+  total: 0
+};
 
+class pedidosForm extends Component {
   Subtotal = async (i, e) => {
     const { handleChange } = this.props;
     await handleChange(e);
@@ -121,7 +125,7 @@ class pedidosForm extends Component {
                   </div>
                 ))}
               </div>
-              <button type="button" onClick={async () => await push("")}>
+              <button type="button" onClick={async () => await push(produtos)}>
                 Add
               </button>
             </Fragment>
@@ -138,15 +142,7 @@ export default withFormik({
     id: 0,
     cliente: "",
     endereco: "",
-    produtos: [
-      {
-        id: 0,
-        descricao: "",
-        qtd: 0,
-        valor: 0,
-        total: 0
-      }
-    ]
+    produtos: [produtos]
   }),
 
   validateOnBlur: false,
