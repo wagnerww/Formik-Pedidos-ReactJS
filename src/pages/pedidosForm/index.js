@@ -1,18 +1,19 @@
 import React, { Component, Fragment } from "react";
-import { withFormik, FieldArray } from "formik";
+import { Form, withFormik, FieldArray, Field } from "formik";
+import { produtos } from '../../commun/produtos'
 import * as Yup from "yup";
 
 import InputValidator from "../../commun/elements/inputValidator";
 
 // import styles from './styles';
 
-const produtos = {
+/*const produtos = {
   id: 0,
   descricao: "",
   qtd: 0,
   valor: 0,
   total: 0
-};
+};*/
 
 class pedidosForm extends Component {
   Subtotal = async (i, e) => {
@@ -28,10 +29,12 @@ class pedidosForm extends Component {
   };
 
   render() {
+
     const { handleSubmit, errors, handleChange, values, touched } = this.props;
 
     return (
-      <form onSubmit={handleSubmit}>
+
+      <Form>
         {!!errors.id && touched.id && <span>{errors.id}</span>}
         <label htmlFor="">id</label>
         <InputValidator
@@ -66,7 +69,7 @@ class pedidosForm extends Component {
         />
         <FieldArray
           name="produtos"
-          render={({ push }) => (
+          render={arrayProdutos => (
             <Fragment>
               <div className="table tableCol5">
                 <div className="tableCell">id</div>
@@ -75,13 +78,13 @@ class pedidosForm extends Component {
                 <div className="tableCell">Valor</div>
                 <div className="tableCell">Total</div>
 
-                {values.produtos.map((prod, index) => (
+                {values.produtos && values.produtos.length > 0 ? (values.produtos.map((prod, index) => (
                   <div key={index} className="table tableCol5">
                     <div className="tableCell">
                       <InputValidator
                         type="number"
                         placeholder="id"
-                        name={`produtos[${index}].id`}
+                        name={`produtos.${index}.id`}
                         value={prod.id}
                         handleChange={handleChange}
                       />
@@ -90,7 +93,7 @@ class pedidosForm extends Component {
                       <InputValidator
                         type="text"
                         placeholder="descricao"
-                        name={`produtos[${index}].descricao`}
+                        name={`produtos.${index}.descricao`}
                         value={prod.descricao}
                         handleChange={handleChange}
                       />
@@ -99,7 +102,7 @@ class pedidosForm extends Component {
                       <InputValidator
                         type="text"
                         placeholder="quantidade"
-                        name={`produtos[${index}].qtd`}
+                        name={`produtos.${index}.qtd`}
                         value={prod.qtd}
                         handleChange={e => this.Subtotal(index, e)}
                       />
@@ -108,24 +111,24 @@ class pedidosForm extends Component {
                       <InputValidator
                         type="number"
                         placeholder="valor"
-                        name={`produtos[${index}].valor`}
+                        name={`produtos.${index}.valor`}
                         value={prod.valor}
-                        handleChange={handleChange}
+                        handleChange={e => this.Subtotal(index, e)}
                       />
                     </div>
                     <div className="tableCell">
                       <InputValidator
                         type="text"
                         placeholder="total"
-                        name={`produtos[${index}].total`}
+                        name={`produtos.${index}.total`}
                         value={prod.total}
                         handleChange={handleChange}
                       />
                     </div>
                   </div>
-                ))}
+                ))) : (null)}
               </div>
-              <button type="button" onClick={async () => await push(produtos)}>
+              <button type="button" onClick={async () => await arrayProdutos.push(produtos)}>
                 Add
               </button>
             </Fragment>
@@ -133,12 +136,12 @@ class pedidosForm extends Component {
         />
 
         <button type="submit">Enviar</button>
-      </form>
+      </Form>
     );
   }
 }
 export default withFormik({
-  mapPropsToValues: () => ({
+  mapPropsToValues: (props) => ({
     id: 0,
     cliente: "",
     endereco: "",
