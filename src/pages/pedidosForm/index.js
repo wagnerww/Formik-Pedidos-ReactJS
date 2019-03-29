@@ -81,12 +81,12 @@ class pedidosForm extends Component {
                 {values.produtos && values.produtos.length > 0 ? (values.produtos.map((prod, index) => (
                   <div key={index} className="table tableCol5">
                     <div className="tableCell">
-                      <InputValidator
+                      <Field
                         type="number"
                         placeholder="id"
                         name={`produtos.${index}.id`}
                         value={prod.id}
-                        handleChange={handleChange}
+                      /*onChange={handleChange}*/
                       />
                     </div>
                     <div className="tableCell">
@@ -95,7 +95,7 @@ class pedidosForm extends Component {
                         placeholder="descricao"
                         name={`produtos.${index}.descricao`}
                         value={prod.descricao}
-                        handleChange={handleChange}
+                      /*  handleChange={handleChange}*/
                       />
                     </div>
                     <div className="tableCell">
@@ -104,7 +104,7 @@ class pedidosForm extends Component {
                         placeholder="quantidade"
                         name={`produtos.${index}.qtd`}
                         value={prod.qtd}
-                        handleChange={e => this.Subtotal(index, e)}
+                      /* handleChange={e => this.Subtotal(index, e)}*/
                       />
                     </div>
                     <div className="tableCell">
@@ -113,7 +113,7 @@ class pedidosForm extends Component {
                         placeholder="valor"
                         name={`produtos.${index}.valor`}
                         value={prod.valor}
-                        handleChange={e => this.Subtotal(index, e)}
+                      /* handleChange={e => this.Subtotal(index, e)}*/
                       />
                     </div>
                     <div className="tableCell">
@@ -122,13 +122,13 @@ class pedidosForm extends Component {
                         placeholder="total"
                         name={`produtos.${index}.total`}
                         value={prod.total}
-                        handleChange={handleChange}
+                      /* handleChange={handleChange}*/
                       />
                     </div>
                   </div>
                 ))) : (null)}
               </div>
-              <button type="button" onClick={async () => await arrayProdutos.push(produtos)}>
+              <button type="button" onClick={async () => await arrayProdutos.push('')}>
                 Add
               </button>
             </Fragment>
@@ -145,7 +145,7 @@ export default withFormik({
     id: 0,
     cliente: "",
     endereco: "",
-    produtos: [produtos]
+    /* produtos: [produtos]*/
   }),
 
   validateOnBlur: false,

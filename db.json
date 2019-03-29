@@ -1,0 +1,36 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "usuname": "wagner ricardo wagner6",
+      "ususenha": "12345",
+      "usuperfil": "3"
+    },
+    {
+      "id": 2,
+      "usuname": "Ricardo",
+      "ususenha": "1234",
+      "usuperfil": 1
+    },
+    {
+      "id": 3,
+      "usuname": "ww",
+      "ususenha": "1234",
+      "usuperfil": 3
+    }
+  ],
+  "perfis": [
+    {
+      "id": 1,
+      "descricao": "Normal"
+    },
+    {
+      "id": 2,
+      "descricao": "testes"
+    },
+    {
+      "id": 3,
+      "descricao": "ADM"
+    }
+  ]
+}
