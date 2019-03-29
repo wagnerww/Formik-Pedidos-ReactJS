@@ -17,26 +17,35 @@ export default class SimpleForm extends Component {
       id: 0,
       usuname: '',
       ususenha: '',
-      usuperfil: 0
+      usuperfil: 0,
+      usuuf: 0,
+      usumunicipio: 0
     },
     perfis: [],
-    uf: []
+    ufs: [],
+    municipios: []
   }
 
   /* START */
   async componentDidMount() {
-    const { id } = this.props.match.params;
+
     try {
+      const { id } = this.props.match.params;
+      let mode = 'INS'
+      let usuarios = {};
       if (id != 0) {
-        const { data } = await api.get(`/usuarios/${id}`);
-        this.setState({ mode: 'UPD', data })
-      } else {
-        this.setState({ mode: 'INS' })
+        usuarios = await api.get(`/usuarios/${id}`);
+        mode = 'UPD'
+        this.setState({ mode, data: usuarios.data });
+        //Carrega os municipios da UF
+        this.handleChangeUF(this.state.data.usuuf)
       }
+      //Carrega os Perfis
       const perfis = await api.get('/perfis');
-      this.setState({ perfis: perfis.data });
+      //Carrega as UF
       const uf = await axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados/');
-      console.log('uf', uf.data)
+      this.setState({ perfis: perfis.data, ufs: uf.data });
+      console.log('state', this.state)
     } catch (error) {
       console.log('error', error)
     }
@@ -61,9 +70,15 @@ export default class SimpleForm extends Component {
     this.setState({ data: { ...this.state.data, [name]: value } });
   }
 
+  handleChangeUF = async (uf) => {
+    const { data } = await axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios`);
+    this.setState({ municipios: data })
+  }
+
   render() {
-    const { handleChangeData } = this;
-    const { usuname, ususenha, usuperfil } = this.state.data
+    const { handleChangeData, handleChangeUF } = this;
+    const { ufs, municipios, data } = this.state;
+    const { usuname, ususenha, usuperfil, usuuf, usumunicipio } = data;
 
     return (<div>
       <Form onSubmit={this.handleSubmit}>
@@ -83,8 +98,24 @@ export default class SimpleForm extends Component {
             ))}
           </select>
         </div>
+        <div>
+          <label>UF</label>
+          <select value={usuuf} name="usuuf" onChange={e => { handleChangeUF(e.target.value); handleChangeData(e) }}>
+            {ufs.map((uf, index) => (
+              <option key={index} value={uf.id}>{uf.sigla}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label>Municipio</label>
+          <select value={usumunicipio} name="usumunicipio" onChange={handleChangeData}>
+            {municipios.map((mun, index) => (
+              <option key={index} value={mun.id}>{mun.nome}</option>
+            ))}
+          </select>
+        </div>
         <input type="submit" value="Submit" />
       </Form>
-    </div>);
+    </div >);
   }
 }
