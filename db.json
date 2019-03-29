@@ -23,6 +23,14 @@
       "usuperfil": 3,
       "usuuf": 0,
       "usumunicipio": 0
+    },
+    {
+      "id": 4,
+      "usuname": "wagner ricardo",
+      "ususenha": "",
+      "usuperfil": 0,
+      "usuuf": "35",
+      "usumunicipio": "3501400"
     }
   ],
   "perfis": [
