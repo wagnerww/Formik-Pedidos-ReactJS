@@ -1,57 +1,44 @@
 import React, { Component, Fragment } from "react";
-import { Form, withFormik, FieldArray, Field } from "formik";
-import { produtos } from '../../commun/produtos'
+import { Form, withFormik, FieldArray, Formik } from "formik";
+import produtos from "../../commun/produtos";
 import * as Yup from "yup";
 
 import InputValidator from "../../commun/elements/inputValidator";
+import PedProdutos from "./Produtos";
+import InputForm from "../../Components/InputForm";
 
-// import styles from './styles';
-
-/*const produtos = {
-  id: 0,
-  descricao: "",
-  qtd: 0,
-  valor: 0,
-  total: 0
-};*/
+import { Debug } from "../../Components/services/Debug";
 
 class pedidosForm extends Component {
-  Subtotal = async (i, e) => {
-    const { handleChange } = this.props;
-    await handleChange(e);
-    const { setFieldValue, values } = this.props;
-    const { produtos } = values;
-    console.log("prod", produtos);
-    const qtd = produtos[i].qtd;
-    const total = qtd * 10;
-    await setFieldValue(`produtos[${i}].total`, total);
-    //onst produto = values.produtos[index];
-  };
-
   render() {
-
-    const { handleSubmit, errors, handleChange, values, touched } = this.props;
+    const {
+      handleSubmit,
+      errors,
+      handleChange,
+      values,
+      touched,
+      setFieldValue
+    } = this.props;
 
     return (
-
       <Form>
         {!!errors.id && touched.id && <span>{errors.id}</span>}
         <label htmlFor="">id</label>
-        <InputValidator
+        <InputForm
           type="text"
           placeholder="id"
           name="id"
-          handleChange={handleChange}
+          onChange={handleChange}
           value={values.id}
           isValid={!!errors.id}
         />
         {!!errors.cliente && touched.cliente && <span>{errors.cliente}</span>}
         <label htmlFor="">Cliente</label>
-        <InputValidator
+        <InputForm
           type="text"
           placeholder="Cliente"
           name="cliente"
-          handleChange={handleChange}
+          onChange={handleChange}
           value={values.cliente}
           isValid={!!errors.cliente && touched.cliente}
         />
@@ -59,25 +46,22 @@ class pedidosForm extends Component {
           <span>{errors.endereco}</span>
         )}
         <label htmlFor="">Endereco</label>
-        <InputValidator
+        <InputForm
           type="text"
           placeholder="Endereceço"
           name="endereco"
-          handleChange={handleChange}
+          onChange={handleChange}
           value={values.endereco}
           isValid={!!errors.endereco && touched.endereco}
         />
-        <FieldArray
-          name="produtos"
-          render={arrayProdutos => (
-            <Fragment>
-              <div className="table tableCol5">
-                <div className="tableCell">id</div>
-                <div className="tableCell">descricao</div>
-                <div className="tableCell">Quantidade</div>
-                <div className="tableCell">Valor</div>
-                <div className="tableCell">Total</div>
+        <PedProdutos
+          values={values}
+          handleChange={handleChange}
+          produtos={produtos}
+          setFieldValue={setFieldValue}
+        />
 
+<<<<<<< HEAD
                 {values.produtos && values.produtos.length > 0 ? (values.produtos.map((prod, index) => (
                   <div key={index} className="table tableCol5">
                     <div className="tableCell">
@@ -133,19 +117,32 @@ class pedidosForm extends Component {
               </button>
             </Fragment>
           )}
+=======
+        <InputForm
+          type="text"
+          placeholder="total"
+          name="total"
+          value={values.total}
+>>>>>>> 2be0df7613ba6a19ad7070a9cb08cca285def31a
         />
 
         <button type="submit">Enviar</button>
+        <Debug />
       </Form>
     );
   }
 }
 export default withFormik({
-  mapPropsToValues: (props) => ({
+  mapPropsToValues: props => ({
     id: 0,
     cliente: "",
     endereco: "",
+<<<<<<< HEAD
     /* produtos: [produtos]*/
+=======
+    produtos: [produtos],
+    total: 0
+>>>>>>> 2be0df7613ba6a19ad7070a9cb08cca285def31a
   }),
 
   validateOnBlur: false,
