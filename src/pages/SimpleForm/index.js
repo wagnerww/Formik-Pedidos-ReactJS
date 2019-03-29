@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Form } from 'formik';
+import axios from 'axios';
 
 import api from '../../services/api'
+
 
 // import { Container } from './styles';
 
@@ -17,7 +19,8 @@ export default class SimpleForm extends Component {
       ususenha: '',
       usuperfil: 0
     },
-    perfis: []
+    perfis: [],
+    uf: []
   }
 
   /* START */
@@ -32,7 +35,8 @@ export default class SimpleForm extends Component {
       }
       const perfis = await api.get('/perfis');
       this.setState({ perfis: perfis.data });
-
+      const uf = await axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados/');
+      console.log('uf', uf.data)
     } catch (error) {
       console.log('error', error)
     }

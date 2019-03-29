@@ -4,19 +4,25 @@
       "id": 1,
       "usuname": "wagner ricardo wagner6",
       "ususenha": "12345",
-      "usuperfil": "3"
+      "usuperfil": "3",
+      "uf": 0,
+      "municipio": 0
     },
     {
       "id": 2,
       "usuname": "Ricardo",
       "ususenha": "1234",
-      "usuperfil": 1
+      "usuperfil": 1,
+      "uf": 0,
+      "municipio": 0
     },
     {
       "id": 3,
       "usuname": "ww",
       "ususenha": "1234",
-      "usuperfil": 3
+      "usuperfil": 3,
+      "uf": 0,
+      "municipio": 0
     }
   ],
   "perfis": [

@@ -61,69 +61,11 @@ class pedidosForm extends Component {
           setFieldValue={setFieldValue}
         />
 
-<<<<<<< HEAD
-                {values.produtos && values.produtos.length > 0 ? (values.produtos.map((prod, index) => (
-                  <div key={index} className="table tableCol5">
-                    <div className="tableCell">
-                      <Field
-                        type="number"
-                        placeholder="id"
-                        name={`produtos.${index}.id`}
-                        value={prod.id}
-                      /*onChange={handleChange}*/
-                      />
-                    </div>
-                    <div className="tableCell">
-                      <InputValidator
-                        type="text"
-                        placeholder="descricao"
-                        name={`produtos.${index}.descricao`}
-                        value={prod.descricao}
-                      /*  handleChange={handleChange}*/
-                      />
-                    </div>
-                    <div className="tableCell">
-                      <InputValidator
-                        type="text"
-                        placeholder="quantidade"
-                        name={`produtos.${index}.qtd`}
-                        value={prod.qtd}
-                      /* handleChange={e => this.Subtotal(index, e)}*/
-                      />
-                    </div>
-                    <div className="tableCell">
-                      <InputValidator
-                        type="number"
-                        placeholder="valor"
-                        name={`produtos.${index}.valor`}
-                        value={prod.valor}
-                      /* handleChange={e => this.Subtotal(index, e)}*/
-                      />
-                    </div>
-                    <div className="tableCell">
-                      <InputValidator
-                        type="text"
-                        placeholder="total"
-                        name={`produtos.${index}.total`}
-                        value={prod.total}
-                      /* handleChange={handleChange}*/
-                      />
-                    </div>
-                  </div>
-                ))) : (null)}
-              </div>
-              <button type="button" onClick={async () => await arrayProdutos.push('')}>
-                Add
-              </button>
-            </Fragment>
-          )}
-=======
         <InputForm
           type="text"
           placeholder="total"
           name="total"
           value={values.total}
->>>>>>> 2be0df7613ba6a19ad7070a9cb08cca285def31a
         />
 
         <button type="submit">Enviar</button>
@@ -137,12 +79,8 @@ export default withFormik({
     id: 0,
     cliente: "",
     endereco: "",
-<<<<<<< HEAD
-    /* produtos: [produtos]*/
-=======
     produtos: [produtos],
     total: 0
->>>>>>> 2be0df7613ba6a19ad7070a9cb08cca285def31a
   }),
 
   validateOnBlur: false,
