@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Form } from "formik";
 import axios from "axios";
 
-import api from "../../services/api";
+import api from "../../../services/api";
 
 // import { Container } from './styles';
 

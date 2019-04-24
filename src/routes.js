@@ -1,25 +1,32 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-import pedidosForm from "./pages/pedidosForm";
-import pedidosConsulta from "./pages/pedidosConsulta";
-import formik from "./pages/FomikOriginal";
-import simpleForm from "./pages/SimpleForm";
-import WhithForm from "./pages/WhithForm";
-import CrudPedidos from "./pages/CrudPedidos";
+// ---- REACT FORMS
+import ReactSimpleForm from "./pages/ReactForm/SimpleForm";
+
+// ---- FORMIK
+import CrudPedidosFormik from "./pages/Formik/CrudPedidosFormik";
+import CrudPedidosWithFormik from "./pages/Formik/CrudPedidosWithFormik";
+import FormikArray from "./pages/Formik/FomikArray";
+import WithForm from "./pages/Formik/WithForm";
 
 // import { Container } from './styles';
 
 const Routes = () => (
   <BrowserRouter>
     <Switch>
-      <Route path="/consulta" component={pedidosConsulta} />
-      <Route path="/formik" component={formik} />
-      <Route path="/simpleform/:id" component={simpleForm} />
-      <Route path="/pedido/create" component={pedidosForm} />
-      <Route path="/pedido/edit/:id" component={pedidosForm} />
-      <Route path="/withformik" component={WhithForm} />
-      <Route path="/crud" component={CrudPedidos} />
+      {/*---- REACT FORM ----*/}
+      <Route path="/react/simpleform" component={ReactSimpleForm} />
+
+      {/*---- FORMIK ----*/}
+      <Route path="/formik/pedidoformik/create" component={CrudPedidosFormik} />
+      <Route path="/formik/pedidoformik/edit/:id" component={CrudPedidosFormik} />
+
+      <Route path="/formik/pedidowformik/create" component={CrudPedidosWithFormik} />
+      <Route path="/formik/pedidowformik/edit/:id" component={CrudPedidosWithFormik} />
+
+      <Route path="/formik/formikarray" component={FormikArray} />
+      <Route path="/formik/withform" component={WithForm} />
     </Switch>
   </BrowserRouter>
 );
