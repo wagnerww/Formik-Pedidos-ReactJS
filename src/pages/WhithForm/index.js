@@ -1,28 +1,24 @@
 import React, { Component } from "react";
-import { withFormik, Form } from "formik";
+import { withFormik, Form, Formik } from "formik";
 
 import { Container } from "./styles";
 
 class DynamicForm extends Component {
-
   state = {
-    mode: 'ins'
-  }
+    mode: "ins"
+  };
 
-  handleChange_test = async (e) => {
-    const {
-      setFieldValue
-    } = this.props;
+  handleChange_test = async e => {
+    const { setFieldValue } = this.props;
     const { name, value } = e.target;
-    await setFieldValue([name], value)
-    /*await setFieldValue("completo", value)*/
-
-  }
+    //await setFieldValue([name], value)
+    await setFieldValue("completo", value);
+  };
 
   render() {
     const { handleChange_test } = this;
     const { values, handleChange, setFieldValue } = this.props;
-    const { nome, sobrenome, tech } = values;
+    const { nome, sobrenome, completo } = values;
     return (
       <Container>
         <Form>
@@ -39,9 +35,10 @@ class DynamicForm extends Component {
             value={sobrenome}
           />
           <input
+            name="completo"
             type="text"
-            onChange={value => setFieldValue("tech", value.target.value)}
-            value={tech}
+            onChange={handleChange_test}
+            value={completo}
           />
 
           <button type="submit">Enviar</button>
@@ -54,11 +51,11 @@ class DynamicForm extends Component {
 export default withFormik({
   enableReinitialize: true,
   mapPropsToValues: props => ({
-    nome: 'Wagner',
-    sobrenome: ''
+    nome: "Wagner",
+    sobrenome: ""
   }),
 
   handleSubmit: values => {
     console.log("Formulario", values);
   }
-})(DynamicForm)
+})(DynamicForm);

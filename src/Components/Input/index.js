@@ -4,7 +4,7 @@ import { Field } from "formik";
 // import { Container } from './styles';
 
 const InputForm = ({ name, isValid, ...Options }) => (
-  <Field
+  <input
     id={name}
     name={name}
     className={isValid ? "inputValidator" : null}

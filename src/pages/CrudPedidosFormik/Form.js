@@ -8,16 +8,6 @@ import Input from "../../Components/Input";
 
 import { Debug } from "../../Components/services/Debug";
 
-class LoadForm extends Component {
-  state = {
-    id: 0,
-    cliente: "",
-    endereco: "",
-    produtos: [produtos],
-    total: 0
-  };
-}
-
 const pedidosForm = ({
   errors,
   handleChange,
@@ -78,10 +68,16 @@ const pedidosForm = ({
 
 export default withFormik({
   mapPropsToValues: props => {
-    console.log("load", props);
-    return { LoadForm };
+    console.log("campos", props.data.cliente);
+    const campos = props.data;
+    return {
+      id: campos.id || 0,
+      cliente: campos.cliente,
+      endereco: campos.endereco,
+      produtos: campos.produtos,
+      total: campos.total
+    };
   },
-
   validateOnBlur: false,
   validateOnChange: false,
 

@@ -5,7 +5,8 @@ import pedidosForm from "./pages/pedidosForm";
 import pedidosConsulta from "./pages/pedidosConsulta";
 import formik from "./pages/FomikOriginal";
 import simpleForm from "./pages/SimpleForm";
-import DynamicForm from "./pages/DynamicForm";
+import WhithForm from "./pages/WhithForm";
+import CrudPedidos from "./pages/CrudPedidos";
 
 // import { Container } from './styles';
 
@@ -17,7 +18,8 @@ const Routes = () => (
       <Route path="/simpleform/:id" component={simpleForm} />
       <Route path="/pedido/create" component={pedidosForm} />
       <Route path="/pedido/edit/:id" component={pedidosForm} />
-      <Route path="/withformik" component={DynamicForm} />
+      <Route path="/withformik" component={WhithForm} />
+      <Route path="/crud" component={CrudPedidos} />
     </Switch>
   </BrowserRouter>
 );
