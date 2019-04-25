@@ -3,9 +3,16 @@ import { FieldArray } from "formik";
 
 import Input from "../../../../Components/Input";
 
+import DetailsProd from "./DetailsProd";
+
+import Modal from "react-modal";
+
 // import { Container } from './styles';
+Modal.setAppElement("#root");
 
 class Produtos extends Component {
+  state = { isDetlhesOpen: false };
+
   Subtotal = async (i, e) => {
     const { handleChange } = this.props;
     await handleChange(e);
@@ -19,71 +26,103 @@ class Produtos extends Component {
   };
 
   render() {
-    const { values, handleChange, produtos } = this.props;
+    const { values, handleChange, produtos, setFieldValue } = this.props;
     return (
       <FieldArray
         name="produtos"
         render={arrayProdutos => (
           <Fragment>
-            <div className="table tableCol5">
-              <div className="tableCell">id</div>
-              <div className="tableCell">descricao</div>
-              <div className="tableCell">Quantidade</div>
-              <div className="tableCell">Valor</div>
-              <div className="tableCell">Total</div>
-
-              {values.produtos && values.produtos.length > 0
-                ? values.produtos.map((prod, index) => (
-                  <div key={index} className="table tableCol5">
-                    <div className="tableCell">
-                      <Input
-                        type="number"
-                        placeholder="id"
-                        name={`produtos.${index}.id`}
-                        value={prod.id}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="tableCell">
-                      <Input
-                        type="text"
-                        placeholder="descricao"
-                        name={`produtos.${index}.descricao`}
-                        value={prod.descricao}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="tableCell">
-                      <Input
-                        type="text"
-                        placeholder="quantidade"
-                        name={`produtos.${index}.qtd`}
-                        value={prod.qtd}
-                        onChange={e => this.Subtotal(index, e)}
-                      />
-                    </div>
-                    <div className="tableCell">
-                      <Input
-                        type="number"
-                        placeholder="valor"
-                        name={`produtos.${index}.valor`}
-                        value={prod.valor}
-                        onChange={e => this.Subtotal(index, e)}
-                      />
-                    </div>
-                    <div className="tableCell">
-                      <Input
-                        type="text"
-                        placeholder="total"
-                        name={`produtos.${index}.total`}
-                        value={prod.total}
-                        onChange={handleChange}
-                      />
-                    </div>
-                  </div>
-                ))
-                : null}
-            </div>
+            <table className="">
+              <thead>
+                <tr>
+                  <td>id</td>
+                  <td>descricao</td>
+                  <td>Quantidade</td>
+                  <td>Valor</td>
+                  <td>Total</td>
+                  <td>Actions</td>
+                </tr>
+              </thead>
+              <tbody>
+                {values.produtos && values.produtos.length > 0
+                  ? values.produtos.map((prod, index) => {
+                      const baseProd = `produtos.${index}`;
+                      return (
+                        <tr key={index}>
+                          <td>
+                            <Input
+                              type="number"
+                              placeholder="id"
+                              name={`${baseProd}.id`}
+                              value={prod.id}
+                              onChange={handleChange}
+                            />
+                          </td>
+                          <td>
+                            <Input
+                              type="text"
+                              placeholder="descricao"
+                              name={`${baseProd}.descricao`}
+                              value={prod.descricao}
+                              onChange={handleChange}
+                            />
+                          </td>
+                          <td>
+                            <Input
+                              type="text"
+                              placeholder="quantidade"
+                              name={`${baseProd}.qtd`}
+                              value={prod.qtd}
+                              onChange={e => this.Subtotal(index, e)}
+                            />
+                          </td>
+                          <td>
+                            <Input
+                              type="number"
+                              placeholder="valor"
+                              name={`${baseProd}.valor`}
+                              value={prod.valor}
+                              onChange={e => this.Subtotal(index, e)}
+                            />
+                          </td>
+                          <td>
+                            <Input
+                              type="number"
+                              placeholder="total"
+                              name={`${baseProd}.total`}
+                              value={prod.total}
+                              onChange={handleChange}
+                            />
+                          </td>
+                          <td>
+                            <span
+                              onClick={e =>
+                                this.setState({ isDetlhesOpen: true })
+                              }
+                            >
+                              Detalhes
+                            </span>
+                            <Modal isOpen={this.state.isDetlhesOpen}>
+                              <span
+                                onClick={e =>
+                                  this.setState({ isDetlhesOpen: false })
+                                }
+                              >
+                                X
+                              </span>
+                              <DetailsProd
+                                baseProd={baseProd}
+                                prod={prod}
+                                setFieldValue={setFieldValue}
+                              />
+                            </Modal>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  : null}
+              </tbody>
+            </table>
             <button
               type="button"
               onClick={async () => await arrayProdutos.push(produtos)}

@@ -5,7 +5,6 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import ReactSimpleForm from "./pages/ReactForm/SimpleForm";
 
 // ---- FORMIK
-import CrudPedidosFormik from "./pages/Formik/CrudPedidosFormik";
 import CrudPedidosWithFormik from "./pages/Formik/CrudPedidosWithFormik";
 import FormikArray from "./pages/Formik/FomikArray";
 import WithForm from "./pages/Formik/WithForm";
@@ -19,11 +18,14 @@ const Routes = () => (
       <Route path="/react/simpleform" component={ReactSimpleForm} />
 
       {/*---- FORMIK ----*/}
-      <Route path="/formik/pedidoformik/create" component={CrudPedidosFormik} />
-      <Route path="/formik/pedidoformik/edit/:id" component={CrudPedidosFormik} />
-
-      <Route path="/formik/pedidowformik/create" component={CrudPedidosWithFormik} />
-      <Route path="/formik/pedidowformik/edit/:id" component={CrudPedidosWithFormik} />
+      <Route
+        path="/formik/pedidowformik/create"
+        component={CrudPedidosWithFormik}
+      />
+      <Route
+        path="/formik/pedidowformik/edit/:id"
+        component={CrudPedidosWithFormik}
+      />
 
       <Route path="/formik/formikarray" component={FormikArray} />
       <Route path="/formik/withform" component={WithForm} />

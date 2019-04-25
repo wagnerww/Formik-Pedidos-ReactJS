@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Form, withFormik, FieldArray, Formik } from "formik";
+import { Form, withFormik } from "formik";
 import produtos from "../../../Data/produtos";
 import * as Yup from "yup";
 
@@ -14,25 +14,26 @@ const Campos = {
   endereco: "",
   produtos: [produtos],
   total: 0
-}
+};
 
 class LoadForm extends Component {
   async componentDidMount() {
     const { setValues } = this.props;
-    Campos.cliente = "wagner"
-    await setValues(
-      Campos
-    )
+    Campos.cliente = "wagner";
+    await setValues(Campos);
   }
 
   render() {
-    const { errors,
+    const {
+      errors,
       handleChange,
       values,
       touched,
-      setFieldValue } = this.props;
+      setFieldValue,
+      handleSubmit
+    } = this.props;
     return (
-      <Form>
+      <Form onSubmit={handleSubmit}>
         {!!errors.id && touched.id && <span>{errors.id}</span>}
         <label htmlFor="">id</label>
         <Input
@@ -53,7 +54,9 @@ class LoadForm extends Component {
           value={values.cliente}
           isValid={!!errors.cliente && touched.cliente}
         />
-        {!!errors.endereco && touched.endereco && <span>{errors.endereco}</span>}
+        {!!errors.endereco && touched.endereco && (
+          <span>{errors.endereco}</span>
+        )}
         <label htmlFor="">Endereco</label>
         <Input
           type="text"
@@ -81,14 +84,12 @@ class LoadForm extends Component {
         <button type="submit">Enviar</button>
         <Debug />
       </Form>
-    )
+    );
   }
 }
 
 export default withFormik({
-  mapPropsToValues: props => (
-    Campos
-  ),
+  mapPropsToValues: props => Campos,
 
   validateOnBlur: false,
   validateOnChange: false,
