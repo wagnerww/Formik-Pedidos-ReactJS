@@ -10,7 +10,8 @@ import { Debug } from "../../../../../Components/services/Debug";
 const Campos = {
   id: 0,
   descricao: "",
-  valor: 0
+  valor: 0,
+  qtd: 0
 };
 
 class DetailsProd extends Component {
@@ -25,6 +26,7 @@ class DetailsProd extends Component {
           value={values.descricao}
         />
         <Input name="valor" onChange={handleChange} value={values.valor} />
+        <Input name="qtd" onChange={handleChange} value={values.qtd} />
         <button type="button" onClick={handleSubmit}>
           Salvar aqui
         </button>
@@ -39,7 +41,8 @@ export default withFormik({
     console.log("props", props);
     return {
       ...Campos,
-      descricao: props.prod.descricao
+      descricao: props.prod.descricao,
+      qtd: props.prod.qtd
     };
   },
 
@@ -58,6 +61,7 @@ export default withFormik({
 
     const { baseProd, setFieldValue } = FormikBag.props;
     setFieldValue(`${baseProd}.descricao`, Values.descricao);
+    setFieldValue(`${baseProd}.qtd`, Values.qtd);
 
     //chamada a api
   }
