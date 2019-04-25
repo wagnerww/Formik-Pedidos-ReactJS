@@ -26,7 +26,7 @@ class DetailsProd extends Component {
         />
         <Input name="valor" onChange={handleChange} value={values.valor} />
         <button type="button" onClick={handleSubmit}>
-          Salvar
+          Salvar aqui
         </button>
         <Debug />
       </Form>
