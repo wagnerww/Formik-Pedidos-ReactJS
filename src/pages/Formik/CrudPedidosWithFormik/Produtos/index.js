@@ -20,7 +20,6 @@ class Produtos extends Component {
     const { produtos } = values;
     const qtd = produtos[i].qtd;
     const total = qtd * 10;
-    console.log("values", values);
     await setFieldValue(`produtos.${i}.total`, total);
     await setFieldValue(`total`, total);
   };
